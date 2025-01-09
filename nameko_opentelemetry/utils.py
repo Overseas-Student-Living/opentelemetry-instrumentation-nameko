@@ -6,9 +6,11 @@ import sys
 from importlib import import_module
 
 import six
-
+import re
+from nameko import config
 
 TRUNCATE_MAX_LENGTH = 200
+CONFIG_KEY_OTEL_EXLUCDES = "otel_excluded_entrypoints"
 
 logger = logging.getLogger(__name__)
 
@@ -102,3 +104,12 @@ def call_function_get_frame(
     finally:
         sys.settrace(trace)
     return frame, result
+
+def is_excluded_entrypoint(method_name):
+    excludes = config.get(CONFIG_KEY_OTEL_EXLUCDES, '')
+    patterns = excludes.split(',')
+    for pattern in patterns:
+        if re.search(pattern, method_name):
+            return True
+
+    return False

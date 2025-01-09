@@ -214,6 +214,10 @@ def worker_setup(tracer, config, wrapped, instance, args, kwargs):
     """
     (worker_ctx,) = args
 
+    if (utils.is_excluded_entrypoint(worker_ctx.entrypoint.method_name)):
+        wrapped(*args, **kwargs)
+        return
+
     adapter = adapter_factory(worker_ctx, config)
     ctx = extract(adapter.get_metadata(worker_ctx))
     token = context.attach(ctx)
@@ -244,6 +248,10 @@ def worker_result(tracer, config, wrapped, instance, args, kwargs):
     attributes and status are set by the configured entrypoint adapter.
     """
     (worker_ctx, result, exc_info) = args
+
+    if (utils.is_excluded_entrypoint(worker_ctx.entrypoint.method_name)):
+        wrapped(*args, **kwargs)
+        return
 
     activated = active_spans.pop(worker_ctx, None)
     if not activated:

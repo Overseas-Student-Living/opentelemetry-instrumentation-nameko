@@ -2,6 +2,7 @@
 import pytest
 
 from nameko_opentelemetry import utils
+from nameko import config
 
 
 @pytest.mark.parametrize(
@@ -93,3 +94,10 @@ class TestTruncate:
 
     def test_truncate_custom_length(self):
         assert utils.truncate("x" * 1000, max_len=500) == ("x" * 500, True)
+
+def test_is_excluded_entrypoint():
+    config[utils.CONFIG_KEY_OTEL_EXLUCDES] = "health_check,local_test"
+
+    assert utils.is_excluded_entrypoint("osl_health_check") == True
+    assert utils.is_excluded_entrypoint("local_test_function") == True
+    assert utils.is_excluded_entrypoint("get_user") == False
