@@ -51,7 +51,7 @@ def amqp_publisher_attributes(publisher, kwargs, config):
         )
 
     attributes = {
-        f"{PREFIX}.amqp_uri": generic_getter("amqp_uri"),
+        # f"{PREFIX}.amqp_uri": generic_getter("amqp_uri"),
         f"{PREFIX}.ssl": generic_getter("ssl"),
         f"{PREFIX}.use_confirms": generic_getter("use_confirms"),
         f"{PREFIX}.delivery_mode": generic_getter("delivery_mode"),
@@ -79,7 +79,7 @@ def amqp_consumer_attributes(consumer):
     Extract attributes relevant to AMQP message consumers.
     """
     return {
-        f"{PREFIX}.amqp_uri": serialise_to_string(consumer.amqp_uri),
+        # f"{PREFIX}.amqp_uri": serialise_to_string(consumer.amqp_uri),
         f"{PREFIX}.ssl": serialise_to_string(consumer.ssl),
         f"{PREFIX}.prefetch_count": serialise_to_string(consumer.prefetch_count),
         f"{PREFIX}.heartbeat": serialise_to_string(consumer.heartbeat),
