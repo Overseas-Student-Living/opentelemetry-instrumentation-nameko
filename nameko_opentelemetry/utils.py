@@ -7,7 +7,7 @@ from importlib import import_module
 
 import six
 import re
-from nameko import config
+import os
 
 TRUNCATE_MAX_LENGTH = 200
 CONFIG_KEY_OTEL_EXLUCDES = "otel_excluded_entrypoints"
@@ -106,8 +106,8 @@ def call_function_get_frame(
     return frame, result
 
 def is_excluded_entrypoint(method_name):
-    excludes = config.get(CONFIG_KEY_OTEL_EXLUCDES, '')
-    patterns = excludes.split(',')
+    excludes = os.getenv("OTEL_EXCLUDED_ENTRYPOINTS")
+    patterns = excludes.split(',') if excludes else []
     for pattern in patterns:
         if re.search(pattern, method_name):
             return True

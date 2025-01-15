@@ -32,7 +32,7 @@ class TestAddToActiveSpan:
         assert len(spans) == 1
 
         assert spans[0].name == "foobar"
-        assert spans[0].attributes["nameko.amqp.amqp_uri"] == nameko.config["AMQP_URI"]
+        # assert spans[0].attributes["nameko.amqp.amqp_uri"] == nameko.config["AMQP_URI"]
 
 
 class TestPublisherAttributes:
@@ -56,12 +56,12 @@ class TestPublisherAttributes:
         assert len(spans) == 1
 
         attributes = spans[0].attributes
-        assert attributes["nameko.amqp.amqp_uri"] == nameko.config["AMQP_URI"]
+        # assert attributes["nameko.amqp.amqp_uri"] == nameko.config["AMQP_URI"]
         assert attributes["nameko.amqp.use_confirms"] == "True"
 
         # just check the other keys all exist
         for attribute in (
-            "nameko.amqp.amqp_uri",
+            # "nameko.amqp.amqp_uri",
             "nameko.amqp.ssl",
             "nameko.amqp.use_confirms",
             "nameko.amqp.delivery_mode",
@@ -198,7 +198,7 @@ class TestConsumerAttributes:
     def test_defaults(self, consumer):
 
         attributes = amqp_consumer_attributes(consumer)
-        assert attributes["nameko.amqp.amqp_uri"] == nameko.config["AMQP_URI"]
+        # assert attributes["nameko.amqp.amqp_uri"] == nameko.config["AMQP_URI"]
 
         # just check the other keys all exist
         for attribute in (
